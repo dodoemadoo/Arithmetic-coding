@@ -1,4 +1,4 @@
-//github project
+//Github project
 
 import java.util.Scanner;
 import java.util.Set;
@@ -13,6 +13,8 @@ class arithmeticCoding
 
 public class Main 
 {
+	private static Scanner scan;
+
 	public static double getRandom(double low,double high) 
 	{
 		return ThreadLocalRandom.current().nextDouble(low, high);
@@ -190,7 +192,7 @@ public class Main
 	
 	public static void main(String args[]) 
     { 
-		Scanner scan = new Scanner(System.in);
+		scan = new Scanner(System.in);
 		String word = scan.nextLine();
 		char[] uniqueChar = getUniqueChar(word);
 		int[] freq = getFrequencies(word, uniqueChar);
