@@ -151,7 +151,7 @@ public class Main
 	
 	public static void getSymobl(double code,arithmeticCoding[] lh)
 	{
-		double x;
+
 	}
 	
 	public static String compression(String word,arithmeticCoding[] lh)
