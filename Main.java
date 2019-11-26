@@ -175,11 +175,6 @@ public class Main
 		return bin; 
 	}
 	
-	public static void getSymobl(double code,arithmeticCoding[] lh)
-	{
-		
-	}
-	
 	public static String decompression(String bin,int length,arithmeticCoding[] lh) 
 	{
 		
