@@ -149,6 +149,11 @@ public class Main
 		return lh;
 	}
 	
+	public static void getSymobl(double code,arithmeticCoding[] lh)
+	{
+		
+	}
+	
 	public static String compression(String word,arithmeticCoding[] lh)
 	{
 		String bin = "ERROR";
