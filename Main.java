@@ -118,6 +118,21 @@ public class Main
 		return freq;
 	}
 	
+	public static double[] getLowHigh(Character symbol,arithmeticCoding[] lh) 
+	{
+		double[] symbolRange = new double[2];
+		for (int i = 0; i < lh.length; i++) 
+		{
+			if(lh[i].symbol==symbol)
+			{
+				symbolRange[0] = lh[i].lowRange;
+				symbolRange[1] = lh[i].highRange;
+				break;
+			}
+		}
+		return symbolRange;
+	}
+	
 	public static arithmeticCoding[] calculateRanges(char[] uniqueChar,int[] freq,String word )
 	{
 		arithmeticCoding[] lh = new arithmeticCoding[uniqueChar.length];
@@ -134,21 +149,41 @@ public class Main
 		return lh;
 	}
 	
-	public static String compression()
+	public static String compression(String word,arithmeticCoding[] lh)
 	{
 		String bin = "ERROR";
-		double rand = 0.1;
+		double rand = 0.1,range=0,lower=0,upper=0;
+		for (int i = 0; i < word.length(); i++)
+		{
+			if(i==0)
+			{
+				lower = getLowHigh(word.charAt(0), lh)[0];
+				upper = getLowHigh(word.charAt(0), lh)[1];
+			}
+			else
+			{
+				upper = lower + range* getLowHigh(word.charAt(i), lh)[1];
+				lower = lower + range*getLowHigh(word.charAt(i), lh)[0];
+			}
+			range = upper-lower;
+		}
 		while(bin.equals("ERROR"))
 		{
-			rand = getRandom(0.7712, 0.773504);
+			rand = getRandom(lower, upper);
 			bin = decToBinary(rand);
 		}
 		return bin; 
 	}
 	
-	public static void decompression() 
+	public static void getSymobl(double code,arithmeticCoding[] lh)
 	{
 		
+	}
+	
+	public static String decompression(String bin,int length,arithmeticCoding[] lh) 
+	{
+		
+		return "";
 	}
 	
 	public static void main(String args[]) 
@@ -158,11 +193,7 @@ public class Main
 		char[] uniqueChar = getUniqueChar(word);
 		int[] freq = getFrequencies(word, uniqueChar);
 		arithmeticCoding[] lh = calculateRanges(uniqueChar, freq, word);
-		for (int i = 0; i < lh.length; i++) 
-		{
-			System.out.println(lh[i].symbol+" "+lh[i].lowRange+" "+lh[i].highRange);
-		}
-		System.out.println(binaryToDecimal(compression(),compression().length()));
-		System.out.println(decToBinary(binaryToDecimal(compression(),compression().length())));
+		System.out.println(binaryToDecimal(compression(word,lh),compression(word,lh).length()));
+		System.out.println(compression(word,lh));
     }
 }
