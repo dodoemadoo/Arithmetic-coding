@@ -153,9 +153,18 @@ public class Main
 		return lh;
 	}
 	
-	public static void getSymobl(double code,arithmeticCoding[] lh)
+	public static Character getSymobl(double code,arithmeticCoding[] lh)
 	{
-
+		char symbol = new Character('s');
+		for (int i = 0; i < lh.length; i++) 
+		{
+			if(lh[i].lowRange<code && lh[i].highRange>code)
+			{
+				symbol = lh[i].symbol;
+				break;
+			}
+		}
+		return symbol;
 	}
 	
 	public static String compression(String word,arithmeticCoding[] lh)
@@ -186,8 +195,26 @@ public class Main
 	
 	public static String decompression(String bin,int length,arithmeticCoding[] lh) 
 	{
-		
-		return "";
+		double range=0,lower=0,upper=0;
+		double value = binaryToDecimal(bin, bin.length());
+		String word = new String("");
+		for (int i = 0; i < length; i++) 
+		{
+			word += getSymobl(value, lh);
+			if(i==0)
+			{
+				lower = getLowHigh(word.charAt(0), lh)[0];
+				upper = getLowHigh(word.charAt(0), lh)[1];
+			}
+			else
+			{
+				value = (value - lower)/range;
+				upper = lower + range* getLowHigh(word.charAt(i), lh)[1];
+				lower = lower + range*getLowHigh(word.charAt(i), lh)[0];
+			}
+			range = upper-lower;
+		}
+		return word;
 	}
 	
 	public static void main(String args[]) 
@@ -199,5 +226,6 @@ public class Main
 		arithmeticCoding[] lh = calculateRanges(uniqueChar, freq, word);
 		System.out.println(binaryToDecimal(compression(word,lh),compression(word,lh).length()));
 		System.out.println(compression(word,lh));
+		System.out.println(decompression(compression(word, lh), word.length(), lh));
     }
 }
