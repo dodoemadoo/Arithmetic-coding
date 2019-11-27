@@ -1,6 +1,3 @@
-//Github project
-// Andrew Emad
-
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
@@ -206,14 +203,20 @@ public class Main
 			{
 				lower = getLowHigh(word.charAt(0), lh)[0];
 				upper = getLowHigh(word.charAt(0), lh)[1];
+				range = upper-lower;
+				value = (value - lower)/range;
 			}
 			else
 			{
-				value = (value - lower)/range;
+				range = upper-lower;
 				upper = lower + range* getLowHigh(word.charAt(i), lh)[1];
 				lower = lower + range*getLowHigh(word.charAt(i), lh)[0];
+				value = (value - lower)/range;
 			}
-			range = upper-lower;
+			System.out.println("***"+value);
+			System.out.println("***********"+range);
+			System.out.println(lower+" "+upper);
+
 		}
 		return word;
 	}
