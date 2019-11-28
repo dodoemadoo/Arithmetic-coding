@@ -22,39 +22,39 @@ public class Main
 	}
 	
 	public static String decToBinary(double num) 
-    { 
-        // Check Number is Between 0 to 1 or Not 
-        if (num >= 1 || num <= 0) 
-            return "ERROR"; 
-  
-        StringBuilder binary = new StringBuilder(); 
-        binary.append("0");
-        binary.append("."); 
-  
-        while (num > 0) 
-        { 
-            /* Setting a limit on length: 32 characters, 
-               If the number cannot be represented 
-               accurately in binary with at most 32 
-               character  */
-            if (binary.length() >= 32) 
-                return "ERROR"; 
-  
-            // Multiply by 2 in num to check it 1 or 0 
-            double r = num * 2; 
-            if (r >= 1) 
-            { 
-                binary.append(1); 
-                num = r - 1; 
-            } 
-            else
-            { 
-                binary.append(0); 
-                num = r; 
-            } 
-        } 
-        return binary.toString(); 
-    } 
+  { 
+      // Check Number is Between 0 to 1 or Not 
+      if (num >= 1 || num <= 0) 
+          return "ERROR"; 
+
+      StringBuilder binary = new StringBuilder(); 
+      binary.append("0");
+      binary.append("."); 
+
+      while (num > 0) 
+      { 
+          /* Setting a limit on length: 32 characters, 
+             If the number cannot be represented 
+             accurately in binary with at most 32 
+             character  */
+          if (binary.length() >= 32) 
+              return "ERROR"; 
+
+          // Multiply by 2 in num to check it 1 or 0 
+          double r = num * 2; 
+          if (r >= 1) 
+          { 
+              binary.append(1); 
+              num = r - 1; 
+          } 
+          else
+          { 
+              binary.append(0); 
+              num = r; 
+          } 
+      } 
+      return binary.toString(); 
+  } 
 	
 	public static double binaryToDecimal(String binary, int len) 
 	{ 
@@ -94,13 +94,13 @@ public class Main
 	{
 		Set<Character> tree_Set = new TreeSet<Character>(); 
 		for(int i=0;i<word.length();i++)
-    		tree_Set.add(word.charAt(i));
+  		tree_Set.add(word.charAt(i));
 		char[] uniqueChar=new char[tree_Set.size()];
 		int k=0;
 		for (char value : tree_Set) 
-        {
+      {
 			uniqueChar[k++]=value;
-        }
+      }
 		return uniqueChar;
 	}
 	
@@ -138,7 +138,7 @@ public class Main
 		return symbolRange;
 	}
 	
-	public static arithmeticCoding[] calculateRanges(char[] uniqueChar,int[] freq,String word )
+	public static arithmeticCoding[] calculateRanges(char[] uniqueChar,double[] freq,String word )
 	{
 		arithmeticCoding[] lh = new arithmeticCoding[uniqueChar.length];
 		for (int i = 0; i < uniqueChar.length; i++) 
@@ -159,7 +159,7 @@ public class Main
 		char symbol = new Character('s');
 		for (int i = 0; i < lh.length; i++) 
 		{
-			if(lh[i].lowRange<code && lh[i].highRange>code)
+			if(lh[i].lowRange<=code && lh[i].highRange>code)
 			{
 				symbol = lh[i].symbol;
 				break;
@@ -171,19 +171,11 @@ public class Main
 	public static String compression(String word,arithmeticCoding[] lh)
 	{
 		String bin = "ERROR";
-		double rand = 0.1,range=0,lower=0,upper=0;
+		double rand = 0.1,range=1,lower=0,upper=1;
 		for (int i = 0; i < word.length(); i++)
 		{
-			if(i==0)
-			{
-				lower = getLowHigh(word.charAt(0), lh)[0];
-				upper = getLowHigh(word.charAt(0), lh)[1];
-			}
-			else
-			{
-				upper = lower + range* getLowHigh(word.charAt(i), lh)[1];
-				lower = lower + range*getLowHigh(word.charAt(i), lh)[0];
-			}
+			upper = lower + range* getLowHigh(word.charAt(i), lh)[1];
+			lower = lower + range*getLowHigh(word.charAt(i), lh)[0];
 			range = upper-lower;
 		}
 		while(bin.equals("ERROR"))
@@ -225,14 +217,15 @@ public class Main
 	}
 	
 	public static void main(String args[]) 
-    { 
+  { 
 		scan = new Scanner(System.in);
 		String word = scan.nextLine();
 		char[] uniqueChar = getUniqueChar(word);
-		int[] freq = getFrequencies(word, uniqueChar);
+		//int[] freq = getFrequencies(word, uniqueChar);
+		double[] freq = {3.2,0.08,0.72};
 		arithmeticCoding[] lh = calculateRanges(uniqueChar, freq, word);
 		System.out.println(binaryToDecimal(compression(word,lh),compression(word,lh).length()));
 		System.out.println(compression(word,lh));
 		System.out.println(decompression(compression(word, lh), word.length(), lh));
-    }
+  }
 }
