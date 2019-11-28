@@ -138,7 +138,7 @@ public class Main
 		return symbolRange;
 	}
 	
-	public static arithmeticCoding[] calculateRanges(char[] uniqueChar,double[] freq,String word )
+	public static arithmeticCoding[] calculateRanges(char[] uniqueChar,int[] freq,String word )
 	{
 		arithmeticCoding[] lh = new arithmeticCoding[uniqueChar.length];
 		for (int i = 0; i < uniqueChar.length; i++) 
@@ -188,30 +188,17 @@ public class Main
 	
 	public static String decompression(String bin,int length,arithmeticCoding[] lh) 
 	{
-		double range=0,lower=0,upper=0;
+		double range=1,lower=0,upper=1;
 		double value = binaryToDecimal(bin, bin.length());
+		double code = binaryToDecimal(bin, bin.length());
 		String word = new String("");
 		for (int i = 0; i < length; i++) 
 		{
-			word += getSymobl(value, lh);
-			if(i==0)
-			{
-				lower = getLowHigh(word.charAt(0), lh)[0];
-				upper = getLowHigh(word.charAt(0), lh)[1];
-				range = upper-lower;
-				value = (value - lower)/range;
-			}
-			else
-			{
-				range = upper-lower;
-				upper = lower + range* getLowHigh(word.charAt(i), lh)[1];
-				lower = lower + range*getLowHigh(word.charAt(i), lh)[0];
-				value = (value - lower)/range;
-			}
-			System.out.println("***"+value);
-			System.out.println("***********"+range);
-			System.out.println(lower+" "+upper);
-
+			word += getSymobl(code, lh);
+			upper = lower + range* getLowHigh(word.charAt(i), lh)[1];
+			lower = lower + range*getLowHigh(word.charAt(i), lh)[0];
+			range = upper-lower;
+			code = (value - lower)/range;
 		}
 		return word;
 	}
@@ -221,8 +208,7 @@ public class Main
 		scan = new Scanner(System.in);
 		String word = scan.nextLine();
 		char[] uniqueChar = getUniqueChar(word);
-		//int[] freq = getFrequencies(word, uniqueChar);
-		double[] freq = {3.2,0.08,0.72};
+		int[] freq = getFrequencies(word, uniqueChar);
 		arithmeticCoding[] lh = calculateRanges(uniqueChar, freq, word);
 		System.out.println(binaryToDecimal(compression(word,lh),compression(word,lh).length()));
 		System.out.println(compression(word,lh));
