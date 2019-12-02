@@ -23,7 +23,6 @@ public class Main
 	
 	public static String decToBinary(double num) 
   { 
-      // Check Number is Between 0 to 1 or Not 
       if (num >= 1 || num <= 0) 
           return "ERROR"; 
 
@@ -33,14 +32,10 @@ public class Main
 
       while (num > 0) 
       { 
-          /* Setting a limit on length: 32 characters, 
-             If the number cannot be represented 
-             accurately in binary with at most 32 
-             character  */
+    	  
           if (binary.length() >= 32) 
               return "ERROR"; 
 
-          // Multiply by 2 in num to check it 1 or 0 
           double r = num * 2; 
           if (r >= 1) 
           { 
@@ -58,27 +53,19 @@ public class Main
 	
 	public static double binaryToDecimal(String binary, int len) 
 	{ 
-	    // Fetch the radix point 
 	    int point = binary.indexOf('.'); 
 	  
-	    // Update point if not found 
 	    if (point == -1) 
 	        point = len; 
 	  
 	    double intDecimal = 0, fracDecimal = 0, twos = 1; 
 	  
-	    // Convert integral part of binary to decimal 
-	    // equivalent 
 	    for (int i = point-1; i>=0; --i) 
 	    { 
-	        // Subtract '0' to convert character 
-	        // into integer 
 	        intDecimal += (binary.charAt(i) - '0') * twos; 
 	        twos *= 2; 
 	    } 
 	  
-	    // Convert fractional part of binary to 
-	    // decimal equivalent 
 	    twos = 2; 
 	    for (int i = point+1; i < len; ++i) 
 	    { 
@@ -86,7 +73,6 @@ public class Main
 	        twos *= 2.0; 
 	    } 
 	  
-	    // Add both integral and fractional part 
 	    return intDecimal + fracDecimal; 
 	} 
 	
@@ -202,16 +188,4 @@ public class Main
 		}
 		return word;
 	}
-	
-	public static void main(String args[]) 
-  { 
-		scan = new Scanner(System.in);
-		String word = scan.nextLine();
-		char[] uniqueChar = getUniqueChar(word);
-		int[] freq = getFrequencies(word, uniqueChar);
-		arithmeticCoding[] lh = calculateRanges(uniqueChar, freq, word);
-		System.out.println(binaryToDecimal(compression(word,lh),compression(word,lh).length()));
-		System.out.println(compression(word,lh));
-		System.out.println(decompression(compression(word, lh), word.length(), lh));
-  }
 }
